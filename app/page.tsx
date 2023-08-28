@@ -41,7 +41,7 @@ export default function Home() {
   async function signInWithGitHub() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
-    //   options: { redirectTo: `${location.origin}/auth/callback` },
+        options: { redirectTo: `${location.origin}/auth/callback` },
     });
     console.log(data)
   }
