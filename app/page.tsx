@@ -4,11 +4,13 @@ import { InventoryCard } from "@/components/inventorycard";
 import { Navbar } from "@/components/navbar";
 import { Sidebar } from "@/components/sidebar";
 import { useEffect, useState } from "react";
-import Login from "./login";
 import {
   createClientComponentClient,
   Session,
 } from "@supabase/auth-helpers-nextjs";
+import { Butcherman } from "next/font/google";
+import { Button } from "@/components/ui/button";
+import { Github, GithubIcon } from "lucide-react";
 
 type InventoryItem = {
   id: number;
@@ -36,11 +38,36 @@ export default function Home() {
     });
   }, []);
 
+  async function signInWithGitHub() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "github",
+    //   options: { redirectTo: `${location.origin}/auth/callback` },
+    });
+    console.log(data)
+  }
+
+  async function signout() {
+    const { error } = await supabase.auth.signOut();
+    if (error) console.log("Error logging out:", error.message);
+    else window.location.reload();
+  }
+
+  useEffect(() => {
+    (async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (error) console.error("Error getting session:", error.message);
+      else setSession(data.session);
+    })();
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
+
   return (
     <div className="relative flex items-center justify-center">
       {/* <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-green-500  to-blue-800  rounded-md filter blur-3xl opacity-30 z-[-1]"></div> */}
       <div className="invisible md:visible md:flex w-20 flex-col fixed inset-y-0 left-0 z-10">
-        <Navbar />
+        {/* <Navbar /> */}
         <Sidebar
           session={session}
           inventory={inventory}
@@ -60,9 +87,20 @@ export default function Home() {
               setInventory={setInventory}
             />
           ) : (
-            <p className="text-8xl font-bold items-center">
+            <div className="grid place-items-center gap-y-4">
+            {/* <p className="text-md xl:text-8xl font-bold items-center">
               Sign-in to Get Started
-            </p>
+            </p> */}
+            <Button
+          variant={"outline"}
+          onClick={signInWithGitHub}
+          className="h-24 w-24"
+        >
+          <GithubIcon size={48} className="" />
+          {/* <p className="text-2xl">Sign-In with GitHub</p>  */}
+        </Button>
+          <img src="./jonventory.jpg" className="w-[300px] rounded-2xl" ></img>
+            </div>            
           )}
         </div>
       </div>
