@@ -81,7 +81,7 @@ export const AddItem = ({ session, inventory, setInventory}: {session: any, inve
                 }}
               />
             ) : (
-              <div><img src={uploadURL} className="max-w-sm pb-4 mx-auto"/></div>
+              <div><img src={uploadURL} className="max-w-xs max-h-64 lg:max-w-md pb-4 mx-auto"/></div>
             )}
           </div>
           <div className="flex items-center justify-between pb-4">
