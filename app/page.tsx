@@ -27,17 +27,6 @@ export default function Home() {
 
   const supabase = createClientComponentClient();
 
-  useEffect(() => {
-    (async () => {
-      const { data, error } = await supabase.auth.getSession();
-      if (error) console.error("Error getting session:", error.message);
-      else setSession(data.session);
-    })();
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
-
   async function signInWithGitHub() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
@@ -57,15 +46,22 @@ export default function Home() {
       const { data, error } = await supabase.auth.getSession();
       if (error) console.error("Error getting session:", error.message);
       else setSession(data.session);
+      console.log(session)
     })();
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+      console.log(session)
     });
   }, []);
 
   return (
     <div className="relative flex items-center justify-center">
       {/* <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-green-500  to-blue-800  rounded-md filter blur-3xl opacity-30 z-[-1]"></div> */}
+      <div className="absolute top-5 right-5">
+      <Button variant={"outline"} className="text-xl" onClick={signout}>
+          Sign out
+      </Button>
+      </div>
       <div className="invisible md:visible md:flex w-20 flex-col fixed inset-y-0 left-0 z-10">
         {/* <Navbar /> */}
         <Sidebar
