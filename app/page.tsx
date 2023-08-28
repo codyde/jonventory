@@ -54,6 +54,12 @@ export default function Home() {
     });
   }, []);
 
+  const { isLoading } = useSessionContext();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="relative flex items-center justify-center">
       {/* <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-green-500  to-blue-800  rounded-md filter blur-3xl opacity-30 z-[-1]"></div> */}
@@ -103,3 +109,7 @@ export default function Home() {
     </div>
   );
 }
+function useSessionContext(): { isLoading: any; session: any; error: any; } {
+  throw new Error("Function not implemented.");
+}
+
