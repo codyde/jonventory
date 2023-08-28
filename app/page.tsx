@@ -26,7 +26,7 @@ export default function Home() {
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
 
   const router = useRouter()
-  const [session, setSession] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
 
   const supabase = createClientComponentClient();
 
@@ -34,7 +34,14 @@ export default function Home() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
     });
+    await hackSession()
     router.refresh()
+  }
+
+  async function hackSession() {
+    const { data, error } = await supabase.auth.getSession();
+    await setSession(data.session)
+    return data
   }
 
   async function signout() {
@@ -44,14 +51,13 @@ export default function Home() {
 
   useEffect(() => {
     (async () => {
-      const {   data: { user }, } = await supabase.auth.getUser()
-      setSession(user);
-      console.log(session)
+      const { data, error } = await supabase.auth.getSession();
+      if (error) console.error("Error getting session:", error.message);
+      else setSession(data.session);
     })();
-    // supabase.auth.onAuthStateChange((_event, session) => {
-    //   setSession(session);
-    //   console.log(session)
-    // });
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
   }, []);
 
 
