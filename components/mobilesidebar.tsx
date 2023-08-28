@@ -23,6 +23,7 @@ export const MobileSidebar : React.FC<SidebarProps> = ({ session, inventory, set
     function toggleEditState() {
       setEditState(!editState);
     }
+    
   return (
     <Sheet>
       <SheetTrigger className="">

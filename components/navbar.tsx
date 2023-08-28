@@ -13,14 +13,6 @@ export const Navbar = ({session}: any) => {
       <div className="md:visible flex invisible items-center">
         <Link className="text-xl font-bold pl-3" href="/">Jonventory</Link>
       </div>
-      <div className="md:invisible flex visible">
-      <MobileSidebar editState={false} setEditState={function (value: SetStateAction<boolean>): void {
-                  throw new Error("Function not implemented.");
-              } } inventory={[]} setInventory={function (value: SetStateAction<{ id: number; name: string; brand: string; imageurl: string; user_id: string; }[]>): void {
-                  throw new Error("Function not implemented.");
-              } } session={undefined} />
-      
-      </div>
       <div className="flex items-center">
         <Login />
       </div>
