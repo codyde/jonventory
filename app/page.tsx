@@ -6,11 +6,12 @@ import { Sidebar } from "@/components/sidebar";
 import { useEffect, useState } from "react";
 import {
   createClientComponentClient,
-  Session,
+  Session, User
 } from "@supabase/auth-helpers-nextjs";
 import { Butcherman } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import { Github, GithubIcon } from "lucide-react";
+import { useRouter } from 'next/navigation'
 
 type InventoryItem = {
   id: number;
@@ -23,42 +24,36 @@ type InventoryItem = {
 export default function Home() {
   const [editState, setEditState] = useState(false);
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
-  const [session, setSession] = useState<Session | null>(null);
+
+  const router = useRouter()
+  const [session, setSession] = useState<User | null>(null);
 
   const supabase = createClientComponentClient();
 
   async function signInWithGitHub() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
-        options: { redirectTo: `${location.origin}/auth/callback` },
     });
-    console.log(data)
+    router.refresh()
   }
 
   async function signout() {
     const { error } = await supabase.auth.signOut();
-    if (error) console.log("Error logging out:", error.message);
-    else window.location.reload();
+    router.refresh()
   }
 
   useEffect(() => {
     (async () => {
-      const { data, error } = await supabase.auth.getSession();
-      if (error) console.error("Error getting session:", error.message);
-      else setSession(data.session);
+      const {   data: { user }, } = await supabase.auth.getUser()
+      setSession(user);
       console.log(session)
     })();
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      console.log(session)
-    });
+    // supabase.auth.onAuthStateChange((_event, session) => {
+    //   setSession(session);
+    //   console.log(session)
+    // });
   }, []);
 
-  const { isLoading } = useSessionContext();
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="relative flex items-center justify-center">
