@@ -3,6 +3,7 @@ import { Header } from "@/components/header";
 import { InventoryCard } from "@/components/inventorycard";
 import { Navbar } from "@/components/navbar";
 import { Sidebar } from "@/components/sidebar";
+import { MobileSidebar } from "@/components/mobilesidebar";
 import { useEffect, useState } from "react";
 import {
   createClientComponentClient,
@@ -26,27 +27,21 @@ export default function Home() {
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
 
   const router = useRouter()
-  const [session, setSession] = useState<Session | null>(null);
-
   const supabase = createClientComponentClient();
+  const [session, setSession] = useState<Session | null>(null);
 
   async function signInWithGitHub() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
+    //   options: { redirectTo: `${location.origin}/auth/callback` },
     });
-    await hackSession()
-    router.refresh()
-  }
-
-  async function hackSession() {
-    const { data, error } = await supabase.auth.getSession();
-    await setSession(data.session)
-    return data
+    console.log(data)
   }
 
   async function signout() {
     const { error } = await supabase.auth.signOut();
-    router.refresh()
+    if (error) console.log("Error logging out:", error.message);
+    else window.location.reload();
   }
 
   useEffect(() => {
@@ -60,17 +55,15 @@ export default function Home() {
     });
   }, []);
 
-
   return (
     <div className="relative flex items-center justify-center">
       {/* <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-green-500  to-blue-800  rounded-md filter blur-3xl opacity-30 z-[-1]"></div> */}
-      <div className="absolute top-5 right-5">
-      <Button variant={"outline"} className="text-xl" onClick={signout}>
-          Sign out
-      </Button>
-      </div>
       <div className="invisible md:visible md:flex w-20 flex-col fixed inset-y-0 left-0 z-10">
-        {/* <Navbar /> */}
+        <Navbar session={session}
+          inventory={inventory}
+          setInventory={setInventory}
+          editState={editState}
+          setEditState={setEditState} />
         <Sidebar
           session={session}
           inventory={inventory}

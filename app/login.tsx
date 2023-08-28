@@ -16,14 +16,6 @@ export default function Login() {
   const supabase = createClientComponentClient();
   const [session, setSession] = useState<Session | null>(null);
 
-  async function signInWithGitHub() {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "github",
-    //   options: { redirectTo: `${location.origin}/auth/callback` },
-    });
-    console.log(data)
-  }
-
   async function signout() {
     const { error } = await supabase.auth.signOut();
     if (error) console.log("Error logging out:", error.message);
@@ -43,14 +35,6 @@ export default function Login() {
 
   return (
     <div className="">
-      {!session && (
-        <Button
-          variant={"outline"}
-          onClick={signInWithGitHub}
-        >
-          <GithubIcon size={24} className="mr-2" /> Sign-In with GitHub
-        </Button>
-      )}
       {session && (
         <Button variant={"outline"} className="text-xl" onClick={signout}>
           Sign out
