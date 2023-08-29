@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description: "",
 };
 
+export const dynamic = 'force-dynamic'
+
 export default function RootLayout({
   children,
 }: {
@@ -18,7 +20,6 @@ export default function RootLayout({
 }) {
 
   // const [editState, setEditState] = useState(false);
-
 
   return (
     <html lang="en" className="dark">
