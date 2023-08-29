@@ -8,7 +8,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Jonventory",
-  description: "",
+  description: "Store and manage your things",
+  viewport: "width=device-width, initial-scale=1",
 };
 
 export const dynamic = 'force-dynamic'
