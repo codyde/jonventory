@@ -73,6 +73,7 @@ export const AddItem = ({ session, inventory, setInventory}: {session: any, inve
               <UploadDropzone<OurFileRouter>
                 endpoint="imageUploader"
                 className="hover:border-2 hover:border-white mb-4"
+                config={{ mode: "auto"}}
                 onClientUploadComplete={(res) => {
                   settheurl(res);
                 }}
