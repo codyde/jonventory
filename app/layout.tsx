@@ -7,7 +7,7 @@ import { Navbar } from "@/components/navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Jonventory",
+  title: "ThingStore",
   description: "Store and manage your things",
   viewport: "width=device-width, user-scalable=no",
 };

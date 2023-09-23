@@ -56,20 +56,16 @@ export default function Home() {
               />
             </div>
           ) : (
-            <div className="grid place-items-center gap-y-4 mx-12 mt-4 lg:mt-14">
+            <div className="grid place-items-center gap-y-4 mx-12 mt-4 lg:mt-14 z-10">
               <p className="text-2xl xl:text-8xl font-bold">
-                Welcome to Jonventory
+                Welcome to ThingStore
               </p>
               <p className="text-2xl text-muted-foreground">
-                To get started use the GitHub login above
+                Store anything. Grab a picture, throw in some text, and save it for later.
               </p>
-              {/* <Button
-                variant={"outline"}
-                onClick={signInWithGitHub}
-                className="h-24 w-24"
-              >
-                <GithubIcon size={48} className="" />
-              </Button> */}
+              <p className="text-2xl text-muted-foreground">
+              Does it really need to be much more complicated?
+              </p>
             </div>
           )}
         </div>

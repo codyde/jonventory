@@ -9,7 +9,7 @@ export const Navbar = () => {
       
     <div className="fixed w-full z-0 md:z-20 flex justify-between items-center py-2 px-4 border-b border-primary/10 bg-gray-900">
       <div className="md:visible flex invisible items-center">
-        <Link className="text-4xl font-bold pl-3" href="/">Jonventory</Link>
+        <Link className="text-4xl font-bold pl-3" href="/">ThingStore</Link>
       </div>
       <div className="flex items-center">
         <AuthButtonServer />
