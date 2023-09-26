@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import {createClientComponentClient, type Session } from "@supabase/auth-helpers-nextjs"
-import { GithubIcon } from "lucide-react";
+import { Chrome, GithubIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export const AuthButtonsClient = ({ session }: {session: Session|null}) => {
@@ -15,6 +15,13 @@ export const AuthButtonsClient = ({ session }: {session: Session|null}) => {
             options: { redirectTo: `${location.origin}/auth/callback` },
         });
       }
+
+      async function signInWithGoogle() {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+          provider: "google",
+          options: { redirectTo: `${location.origin}/auth/callback` },
+        });
+    }
     
       async function signOut() {
         console.log("signout")
@@ -27,6 +34,7 @@ export const AuthButtonsClient = ({ session }: {session: Session|null}) => {
     ) : (
       <div className="mx-auto">
         <Button className="py-8 text-xl gap-x-2" variant={"outline"} onClick={signIn}>Login with GitHub<GithubIcon size={36} /></Button>
+        <Button className="py-8 text-xl gap-x-2" variant={"outline"} onClick={signInWithGoogle}>Login with Google<Chrome size={36} /></Button>
         </div>
     )
 }
