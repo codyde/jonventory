@@ -3,15 +3,13 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {createClientComponentClient, type Session } from "@supabase/auth-helpers-nextjs"
 
 
-export default function AvatarLogout() {
+export default async function AvatarLogout() {
     const supabase = createClientComponentClient();
 
     async function signOut() {
@@ -19,15 +17,16 @@ export default function AvatarLogout() {
         const { error } = await supabase.auth.signOut();
         window.location.reload()
       }
+      const { data, error } = await supabase.auth.getSession()
+      
 
-    console.log(supabase.auth)
+      const url = data.session?.user.user_metadata.avatar_url
 
     return (
   <DropdownMenu>
     <DropdownMenuTrigger>
       <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>CN</AvatarFallback>
+        <AvatarImage  src={url} />
       </Avatar>
     </DropdownMenuTrigger>
     <DropdownMenuContent>
