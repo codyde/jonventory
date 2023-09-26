@@ -1,6 +1,8 @@
 import Link from "next/link";
 import AuthButtonServer from "@/components/auth-buttons-server";
 import { Sidebar } from "./sidebar";
+import { Button } from "./ui/button";
+import { LoginUI } from "./loginui";
 
 
 export const Navbar = () => {
@@ -11,8 +13,10 @@ export const Navbar = () => {
       <div className="md:visible flex invisible items-center">
         <Link className="text-4xl font-bold pl-3" href="/">ThingStore</Link>
       </div>
-      <div className="flex items-center">
-        <AuthButtonServer />
+      <div className="flex items-center gap-x-2">
+        <LoginUI />
+        {/* <Button className="text-2xl" variant={"outline"}>Log In</Button> */}
+        {/* <AuthButtonServer /> */}
       </div>
     </div>
     </div>
