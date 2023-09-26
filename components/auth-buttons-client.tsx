@@ -32,9 +32,9 @@ export const AuthButtonsClient = ({ session }: {session: Session|null}) => {
     return session ? (
         <Button className="text-2xl py-6" variant={"outline"} onClick={signOut}>Logout</Button>
     ) : (
-      <div className="mx-auto">
+      <div className="grid items-center space-y-4">
         <Button className="py-8 text-xl gap-x-2" variant={"outline"} onClick={signIn}>Login with GitHub<GithubIcon size={36} /></Button>
         <Button className="py-8 text-xl gap-x-2" variant={"outline"} onClick={signInWithGoogle}>Login with Google<Chrome size={36} /></Button>
-        </div>
+      </div>
     )
 }

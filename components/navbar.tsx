@@ -1,11 +1,13 @@
 import Link from "next/link";
-import AuthButtonServer from "@/components/auth-buttons-server";
-import { Sidebar } from "./sidebar";
-import { Button } from "./ui/button";
 import { LoginUI } from "./loginui";
+import AvatarLogout from "./avatar";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
-
-export const Navbar = () => {
+export const Navbar = async () => {
+  const supabase = createServerComponentClient({ cookies });
+  const {data: {session}} = await supabase.auth.getSession()
+  
   return (
     <div>
       
@@ -14,9 +16,11 @@ export const Navbar = () => {
         <Link className="text-4xl font-bold pl-3" href="/">ThingStore</Link>
       </div>
       <div className="flex items-center gap-x-2">
+       {session ? (
+        <AvatarLogout />
+       ) :(
         <LoginUI />
-        {/* <Button className="text-2xl" variant={"outline"}>Log In</Button> */}
-        {/* <AuthButtonServer /> */}
+       )}
       </div>
     </div>
     </div>
