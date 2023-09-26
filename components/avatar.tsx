@@ -1,3 +1,4 @@
+"use client"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,8 +8,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {createClientComponentClient, type Session } from "@supabase/auth-helpers-nextjs"
+
 
 export default function AvatarLogout() {
+    const supabase = createClientComponentClient();
+
+    async function signOut() {
+        console.log("signout")
+        const { error } = await supabase.auth.signOut();
+        window.location.reload()
+      }
+
+    console.log(supabase.auth)
+
     return (
   <DropdownMenu>
     <DropdownMenuTrigger>
@@ -18,12 +31,7 @@ export default function AvatarLogout() {
       </Avatar>
     </DropdownMenuTrigger>
     <DropdownMenuContent>
-      <DropdownMenuLabel>My Account</DropdownMenuLabel>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem>Profile</DropdownMenuItem>
-      <DropdownMenuItem>Billing</DropdownMenuItem>
-      <DropdownMenuItem>Team</DropdownMenuItem>
-      <DropdownMenuItem>Subscription</DropdownMenuItem>
+      <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>)
 };

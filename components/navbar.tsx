@@ -17,7 +17,7 @@ export const Navbar = async () => {
       </div>
       <div className="flex items-center gap-x-2">
        {session ? (
-        <AvatarLogout />
+        <AvatarLogout session={session} />
        ) :(
         <LoginUI />
        )}
